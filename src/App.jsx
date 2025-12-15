@@ -4,19 +4,19 @@ import Carrito from './pages/Carrito'
 import Layout from './components/Layout'
 import Inicio from './pages/Inicio'
 import Servicios from './pages/Servicios'
-import Gatos from './pages/Gatos'
-import DetalleGatos from './pages/DetalleGatos'
-import DetallePerros from './pages/DetallePerros'
+import Autos from './pages/Autos'
+import DetalleAuto from './pages/DetalleAuto'
+import DetalleCamioneta from './pages/DetalleCamioneta'
 import Pagar from './pages/Pagar'
 import RutaProtegida from './pages/RutaProtegida'
 import IniciarSesion from './pages/IniciarSesion'
-import Perros from './pages/Perros'
+import Camionetas from './pages/Camionetas'
 import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
 import Dashboard from './pages/Dashboard'
-import { ProductsProvider } from './context/GatosContext'
-import EliminarGatos from './components/EliminarGatos'
-import FormularioGatos from './components/FormularioGatos'
+import { AutosProvider } from './context/AutosContext'
+import EliminarAutos from './components/EliminarAutos'
+import FormularioAutos from './components/FormularioAutos'
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
@@ -26,7 +26,7 @@ function App() {
     <>
       <AuthProvider>
         <CartProvider>
-          <ProductsProvider>
+          <AutosProvider>
             <ToastContainer
               autoClose={2500}
               theme="colored"
@@ -36,39 +36,52 @@ function App() {
               <Route element={<Layout />}>
                 <Route path='/' element={<Inicio />} />
                 <Route path='/servicios' element={<Servicios />} />
-                <Route path='/gatos' element={<Gatos />} />
-                <Route path='/perros' element={<Perros />} />
-                <Route path='/gatos/:id/:nombre' element={<DetalleGatos />} />
-                <Route path='/perros/:id/:nombre' element={<DetallePerros />} />
-                <Route path='/carrito' element={<Carrito />} />
-                <Route path='/iniciar-sesion' element={<IniciarSesion />} />
-                <Route path='/dashboard' element={
-                  <RutaProtegida soloAdmin={true}>
-                    <Dashboard />
-                  </RutaProtegida>} />
 
+                {/* Catálogo principal */}
+                <Route path='/autos' element={<Autos />} />
+                <Route path='/camionetas' element={<Camionetas />} />
+
+                {/* Detalles */}
+                <Route path='/autos/:id/:nombre' element={<DetalleAuto />} />
+                <Route path='/camionetas/:id/:nombre' element={<DetalleCamioneta />} />
+
+                {/* Carrito y pagos */}
+                <Route path='/carrito' element={<Carrito />} />
                 <Route path='/pagar' element={
                   <RutaProtegida>
                     <Pagar />
-                  </RutaProtegida>} />
-
-                <Route path='/eliminar-gatos' element={
-                  <RutaProtegida soloAdmin={true}>
-                    <EliminarGatos />
-                  </RutaProtegida>} />
-
-                <Route path='/formulario-gatos' element={
-                  <RutaProtegida>
-                    <FormularioGatos />
                   </RutaProtegida>
-                }
-                />
+                } />
+
+                {/* Autenticación */}
+                <Route path='/iniciar-sesion' element={<IniciarSesion />} />
+
+                {/* Admin */}
+                <Route path='/dashboard' element={
+                  <RutaProtegida soloAdmin={true}>
+                    <Dashboard />
+                  </RutaProtegida>
+                } />
+
+                <Route path='/eliminar-autos' element={
+                  <RutaProtegida soloAdmin={true}>
+                    <EliminarAutos />
+                  </RutaProtegida>
+                } />
+
+                <Route path='/formulario-autos' element={
+                  <RutaProtegida>
+                    <FormularioAutos />
+                  </RutaProtegida>
+                } />
+
+                {/* Ruta por defecto */}
                 <Route path='*' element={<Navigate to='/' replace />} />
               </Route>
             </Routes>
-          </ProductsProvider>
+          </AutosProvider>
         </CartProvider>
-      </AuthProvider >
+      </AuthProvider>
     </>
   )
 }
