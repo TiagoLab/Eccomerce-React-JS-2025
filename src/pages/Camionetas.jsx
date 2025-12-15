@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import datosCamionetas from "../assets/autos.json"   // ✅ tu JSON adaptado
+import datosCamionetas from "../assets/autos.json"    
 import { useCartContext } from "../context/CartContext"
 
 const Camionetas = () => {
@@ -18,7 +18,7 @@ const Camionetas = () => {
             console.log("TIMEOUT EJECUTADO")
 
             try {
-                setCamionetas(datosCamionetas.autos)   // ✅ antes: perros
+                setCamionetas(datosCamionetas.autos)   
                 setCargando(false)
 
             } catch (error) {
@@ -100,3 +100,4 @@ const Camionetas = () => {
 }
 
 export default Camionetas
+
