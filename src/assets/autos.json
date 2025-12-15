@@ -1,0 +1,60 @@
+{
+  "autos": [
+    {
+      "nombre": "Toyota Corolla",
+      "descripcion": "Sedán confiable, eficiente y cómodo para uso diario.",
+      "precio": 15000,
+      "imagen": "/img_autos/toyota_corolla.png",
+      "id": "1"
+    },
+    {
+      "nombre": "Honda Civic",
+      "descripcion": "Diseño moderno, excelente rendimiento y bajo consumo.",
+      "precio": 16000,
+      "imagen": "/img_autos/honda_civic.png",
+      "id": "2"
+    },
+    {
+      "nombre": "Ford Mustang",
+      "descripcion": "Deportivo icónico con gran potencia y estilo agresivo.",
+      "precio": 35000,
+      "imagen": "/img_autos/ford_mustang.png",
+      "id": "3"
+    },
+    {
+      "nombre": "Chevrolet Camaro",
+      "descripcion": "Muscle car con alto desempeño y estética imponente.",
+      "precio": 34000,
+      "imagen": "/img_autos/chevrolet_camaro.png",
+      "id": "4"
+    },
+    {
+      "nombre": "Volkswagen Golf",
+      "descripcion": "Compacto versátil, equilibrado y de excelente manejo.",
+      "precio": 18000,
+      "imagen": "/img_autos/vw_golf.png",
+      "id": "5"
+    },
+    {
+      "nombre": "BMW Serie 3",
+      "descripcion": "Sedán premium con gran confort y desempeño deportivo.",
+      "precio": 42000,
+      "imagen": "/img_autos/bmw_serie3.png",
+      "id": "6"
+    },
+    {
+      "nombre": "Audi A4",
+      "descripcion": "Elegante, tecnológico y con excelente calidad de construcción.",
+      "precio": 43000,
+      "imagen": "/img_autos/audi_a4.png",
+      "id": "7"
+    },
+    {
+      "nombre": "Mercedes-Benz Clase C",
+      "descripcion": "Lujo, confort y rendimiento en un sedán de alta gama.",
+      "precio": 45000,
+      "imagen": "/img_autos/mercedes_clasec.png",
+      "id": "8"
+    }
+  ]
+}
