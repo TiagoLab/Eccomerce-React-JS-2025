@@ -7,7 +7,7 @@ function Footer() {
         color: "#1565c0",
       }}
     >
-      &copy; 2025 - Adopciones Transfor - Todos los derechos reservados
+      &copy; 2025 - Transfor Motors - Todos los derechos reservados
     </footer>
   )
 }
