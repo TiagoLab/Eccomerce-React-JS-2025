@@ -8,35 +8,44 @@ function Servicios() {
 
       <div className="text-primary fs-5" style={{ lineHeight: "1.8" }}>
         <p>
-          En <strong>Adopciones Transfor</strong>, nos preocupamos por el bienestar de cada mascota y de quienes deciden darles un hogar. Por eso, ofrecemos una amplia variedad de servicios pensados para acompañarte en cada etapa de la adopción y el cuidado de tus animales.
+          En <strong>Transfor Motors</strong> trabajamos para ofrecerte una experiencia completa, segura y confiable en la compra y mantenimiento de tu vehículo. 
+          Nuestros servicios están diseñados para acompañarte antes, durante y después de tu adquisición.
         </p>
 
         <ul className="list-group-flush mb-4">
           <li className="list-group-item border-0 ps-0">
-            <strong>1. Orientación para la adopción:</strong> Te ayudamos a elegir la mascota que mejor se adapte a tu estilo de vida, tu hogar y tu familia, asegurando que la experiencia de adopción sea positiva para todos.
+            <strong>1. Asesoramiento personalizado:</strong> Te ayudamos a elegir el vehículo que mejor se adapte a tus necesidades, presupuesto y estilo de vida.
           </li>
+
           <li className="list-group-item border-0 ps-0">
-            <strong>2. Salud y bienestar:</strong> Contamos con revisiones básicas de salud, vacunación y desparasitación, para que tu nueva mascota llegue a casa sana y feliz.
+            <strong>2. Revisión técnica y certificación:</strong> Cada vehículo es inspeccionado rigurosamente para garantizar su funcionamiento, seguridad y calidad.
           </li>
+
           <li className="list-group-item border-0 ps-0">
-            <strong>3. Educación y entrenamiento:</strong> Ofrecemos talleres y consejos para que puedas enseñarle hábitos básicos, socialización y obediencia, fomentando una convivencia armoniosa.
+            <strong>3. Financiamiento flexible:</strong> Ofrecemos planes de pago accesibles y opciones de financiación adaptadas a cada cliente.
           </li>
+
           <li className="list-group-item border-0 ps-0">
-            <strong>4. Apoyo post-adopción:</strong> Nuestro compromiso no termina al momento de la adopción. Te acompañamos con seguimiento y orientación, resolviendo dudas y brindando soporte para cualquier situación que pueda surgir.
+            <strong>4. Servicio post‑venta:</strong> Te acompañamos después de la compra con soporte, mantenimiento y atención personalizada.
           </li>
+
           <li className="list-group-item border-0 ps-0">
-            <strong>5. Eventos y actividades:</strong> Organizamos encuentros, charlas y actividades especiales para que los adoptantes y sus mascotas puedan socializar, aprender y disfrutar juntos.
+            <strong>5. Garantía y soporte técnico:</strong> Brindamos garantía en todos nuestros vehículos y asistencia técnica especializada.
           </li>
         </ul>
 
         <p>
-          En <strong>Adopciones Transfor</strong> creemos que cada mascota merece un hogar lleno de amor y cuidado, y que cada adoptante merece sentirse acompañado en todo el proceso. 💙
+          En <strong>Transfor Motors</strong> creemos que elegir un vehículo es una decisión importante. 
+          Por eso, nuestro compromiso es brindarte confianza, transparencia y un servicio de excelencia.
         </p>
       </div>
 
       <div className="text-center mt-4">
         <Link to="/">
-          <button className="btn btn-primary fw-bold px-4 py-2" style={{ backgroundColor: "#1565c0", borderColor: "#0d47a1" }}>
+          <button
+            className="btn btn-primary fw-bold px-4 py-2"
+            style={{ backgroundColor: "#1565c0", borderColor: "#0d47a1" }}
+          >
             Volver al Inicio
           </button>
         </Link>
