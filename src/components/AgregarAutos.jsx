@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-function AgregarGatos() {
+function AgregarAutos() {
 
-  const [gatos, setGatos] = useState({
+  const [auto, setAuto] = useState({
     imagen: "",
     nombre: "",
     descripcion: "",
@@ -20,7 +20,7 @@ function AgregarGatos() {
 
     if (name === "descripcion" && value.length > 200) return
 
-    setGatos((prev) => ({ ...prev, [name]: value }))
+    setAuto((prev) => ({ ...prev, [name]: value }))
 
     if (errores[name]) {
       setErrores((prev) => ({ ...prev, [name]: "" }))
@@ -30,17 +30,17 @@ function AgregarGatos() {
   const validarFormulario = () => {
     const errorDeCarga = {}
 
-    if (!gatos.nombre.trim()) {
-      errorDeCarga.nombre = "El nombre es obligatorio."
+    if (!auto.nombre.trim()) {
+      errorDeCarga.nombre = "El nombre del vehículo es obligatorio."
     }
 
-    if (!gatos.precio.trim()) {
+    if (!auto.precio.trim()) {
       errorDeCarga.precio = "El precio es obligatorio."
     } else {
-      const precioLimpio = gatos.precio.replace(/\./g, "").replace(",", ".")
+      const precioLimpio = auto.precio.replace(/\./g, "").replace(",", ".")
       const precioNumerico = parseFloat(precioLimpio)
 
-      if (!/^[\d.,]+$/.test(gatos.precio.replace(/\./g, ""))) {
+      if (!/^[\d.,]+$/.test(auto.precio.replace(/\./g, ""))) {
         errorDeCarga.precio = "Solo números, puntos o comas."
       } else if (isNaN(precioNumerico)) {
         errorDeCarga.precio = "Precio no válido."
@@ -49,42 +49,42 @@ function AgregarGatos() {
       }
     }
 
-    if (!gatos.descripcion.trim()) {
+    if (!auto.descripcion.trim()) {
       errorDeCarga.descripcion = "La descripción es obligatoria."
-    } else if (gatos.descripcion.length < 10) {
+    } else if (auto.descripcion.length < 10) {
       errorDeCarga.descripcion = "Mínimo 10 caracteres."
-    } else if (gatos.descripcion.length > 200) {
+    } else if (auto.descripcion.length > 200) {
       errorDeCarga.descripcion = "Máximo 200 caracteres."
     }
 
-    setErrores(errorDeCarga);
+    setErrores(errorDeCarga)
     return Object.keys(errorDeCarga).length === 0
   }
 
-  // Agregar gatos
-  const agregarGatos = async (gatos) => {
+  // Agregar auto
+  const agregarAuto = async (auto) => {
     try {
-      const gatoEnviar = {
-        ...gatos,
-        precio: gatos.precio.replace(",", "."),
+      const autoEnviar = {
+        ...auto,
+        precio: auto.precio.replace(",", "."),
       }
 
       const respuesta = await fetch(
-        'https://68d6f23ec2a1754b426c4d01.mockapi.io/gatos',
+        "https://68d6f23ec2a1754b426c4d01.mockapi.io/autos",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(gatoEnviar),
+          body: JSON.stringify(autoEnviar),
         }
       )
 
-      if (!respuesta.ok) throw new Error("Error al agregar la mascota.");
+      if (!respuesta.ok) throw new Error("Error al agregar el vehículo.")
 
       const data = await respuesta.json()
-      alert("La mascota fue agregada correctamente")
+      alert("El vehículo fue agregado correctamente")
       return data
     } catch (error) {
-      alert("Hubo un problema al agregar la mascota.")
+      alert("Hubo un problema al agregar el vehículo.")
       throw error
     }
   }
@@ -96,20 +96,22 @@ function AgregarGatos() {
 
     setCargando(true)
     try {
-      await agregarGatos(gatos)
+      await agregarAuto(auto)
 
-      const agregarOtro = window.confirm('Mascota agregada correctamente!\n\n¿Desea agregar otra mascota?\n\n• "Aceptar": Agrega otra mascota\n• "Cancelar": Redirige a la lista de mascotas')
+      const agregarOtro = window.confirm(
+        'Vehículo agregado correctamente!\n\n¿Desea agregar otro vehículo?\n\n• "Aceptar": Agrega otro vehículo\n• "Cancelar": Redirige a la lista de vehículos'
+      )
 
       if (agregarOtro) {
-        setGatos({ imagen: '', nombre: '', descripcion: '', categoria: '', precio: '' })
+        setAuto({ imagen: "", nombre: "", descripcion: "", categoria: "", precio: "" })
         setErrores({})
-      } else {    
+      } else {
         setTimeout(() => {
-          navigate('/gatos')
+          navigate("/autos")
         }, 100)
       }
 
-      setGatos({
+      setAuto({
         imagen: "",
         nombre: "",
         descripcion: "",
@@ -126,19 +128,19 @@ function AgregarGatos() {
 
   return (
     <form onSubmit={manejarEnvio} className="mx-auto p-4 border rounded-3 shadow-sm w-100 w-md-75 w-lg-50">
-      
-      <h2 className="fw-bold mb-4 text-center text-primary">Agregar Mascota (gato)</h2>
+
+      <h2 className="fw-bold mb-4 text-center text-primary">Agregar Vehículo</h2>
 
       <div className="mb-3">
         <label className="form-label fw-semibold">Nombre: *</label>
         <input
           type="text"
           name="nombre"
-          value={gatos.nombre}
+          value={auto.nombre}
           onChange={manejarCambio}
           disabled={cargando}
           className={`form-control ${errores.nombre ? "is-invalid" : ""}`}
-          placeholder="Ingrese el nombre de la mascota (gato)"
+          placeholder="Ingrese el nombre del vehículo"
         />
         {errores.nombre && <div className="invalid-feedback">{errores.nombre}</div>}
       </div>
@@ -148,15 +150,15 @@ function AgregarGatos() {
         <input
           type="text"
           name="precio"
-          value={gatos.precio}
+          value={auto.precio}
           onChange={manejarCambio}
           disabled={cargando}
-          placeholder="Ej: 40.000 o 40.000,50"
+          placeholder="Ej: 1.500.000 o 1.500.000,50"
           inputMode="decimal"
           className={`form-control ${errores.precio ? "is-invalid" : ""}`}
         />
         <div className="form-text text-muted">
-          Formato argentino: punto para miles, sin decimales.
+          Formato argentino: punto para miles, coma para decimales.
         </div>
         {errores.precio && <div className="invalid-feedback">{errores.precio}</div>}
       </div>
@@ -166,10 +168,10 @@ function AgregarGatos() {
         <input
           type="text"
           name="categoria"
-          value={gatos.categoria}
+          value={auto.categoria}
           onChange={manejarCambio}
           disabled={cargando}
-          placeholder="Ej: Pelo semilargo, Pelo corto oriental, etc."
+          placeholder="Ej: Sedán, SUV, Hatchback, etc."
           className="form-control"
         />
       </div>
@@ -179,10 +181,10 @@ function AgregarGatos() {
         <input
           type="text"
           name="imagen"
-          value={gatos.imagen}
+          value={auto.imagen}
           onChange={manejarCambio}
           disabled={cargando}
-          placeholder="https://i.imgur.com/JriKJW5.png"
+          placeholder="https://i.imgur.com/ejemplo.png"
           className="form-control"
         />
       </div>
@@ -191,7 +193,7 @@ function AgregarGatos() {
         <label className="form-label fw-semibold">Descripción: *</label>
         <textarea
           name="descripcion"
-          value={gatos.descripcion}
+          value={auto.descripcion}
           onChange={manejarCambio}
           rows="4"
           disabled={cargando}
@@ -199,8 +201,8 @@ function AgregarGatos() {
           placeholder="Mínimo 10 caracteres, máximo 200 caracteres"
           className={`form-control ${errores.descripcion ? "is-invalid" : ""}`}
         />
-        <div className={`form-text ${gatos.descripcion.length > 200 ? "text-danger" : "text-muted"}`}>
-          {gatos.descripcion.length}/200 caracteres
+        <div className={`form-text ${auto.descripcion.length > 200 ? "text-danger" : "text-muted"}`}>
+          {auto.descripcion.length}/200 caracteres
         </div>
         {errores.descripcion && <div className="invalid-feedback">{errores.descripcion}</div>}
       </div>
@@ -210,11 +212,12 @@ function AgregarGatos() {
         disabled={cargando}
         className={`btn w-100 fw-semibold rounded-2 ${cargando ? "btn-secondary" : "btn-success"}`}
       >
-        {cargando ? "Agregando..." : "Agregar Mascota"}
+        {cargando ? "Agregando..." : "Agregar Vehículo"}
       </button>
 
       <p className="mt-2 text-muted small fst-italic">(*) Campos obligatorios</p>
     </form>
   )
 }
-export default AgregarGatos
+
+export default AgregarAutos
