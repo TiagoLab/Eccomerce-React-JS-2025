@@ -3,7 +3,7 @@ function Inicio() {
     <div style={{ textAlign: 'center', padding: '20px' }}>
       <h1 className="mt-5"><strong>Mascotas Transfor:</strong> adopción responsable de animales</h1>
       <video
-        src="videos/Video_Gatos.mp4"
+        src="/videos/intro_autos.mp4"
         controls
         autoPlay
         loop
@@ -71,4 +71,5 @@ e: '1.1rem', lineHeight: '1.6', maxWidth: '700px', margin: '20px auto' }}>
 }
 
 export default Inicio
+
 
