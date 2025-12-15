@@ -7,17 +7,17 @@ export function CartProvider({ children }) {
     const [cart, setCart] = useState([])
 
     // Agregar al carrito
-    const addToCart = (gato) => {
+    const addToCart = (vehiculo) => {
         setCart((prevCart) => {
-            const existingItem = prevCart.find((item) => item.nombre === gato.nombre)
+            const existingItem = prevCart.find((item) => item.nombre === vehiculo.nombre)
             if (existingItem) {
                 return prevCart.map((item) =>
-                    item.nombre === gato.nombre
+                    item.nombre === vehiculo.nombre
                         ? { ...item, quantity: item.quantity + 1 }
                         : item
                 )
             } else {
-                return [...prevCart, { ...gato, quantity: 1 }]
+                return [...prevCart, { ...vehiculo, quantity: 1 }]
             }
         })
     }
@@ -36,11 +36,12 @@ export function CartProvider({ children }) {
                 )
                 .filter((item) => item.quantity > 0)
         )
-    }    
+    }
 
     // Calcular total
     const total = cart
-        .reduce((acc, item) => acc + item.precio * item.quantity, 0).toFixed(2)     
+        .reduce((acc, item) => acc + item.precio * item.quantity, 0)
+        .toFixed(2)
 
     const value = {
         cart,
