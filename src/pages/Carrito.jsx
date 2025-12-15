@@ -26,13 +26,13 @@ export default function Carrito() {
                                     <strong>El carrito está vacío</strong>
                                 </p>
                                 <Link
-                                    to="/gatos"
+                                    to="/autos"
                                     className="text-decoration-none"
                                 >
                                     <button
                                         className="btn btn-secondary mt-3 text-center d-block mx-auto fw-bold rounded fs-6 w-200"
                                     >
-                                        Ver otras mascotas
+                                        Ver otros vehículos
                                     </button>
                                 </Link>
                             </div>
@@ -74,7 +74,6 @@ export default function Carrito() {
                                 <div className="total-section mt-4">
                                     <div className="total-container bg-primary text-light border border-2 border-primary-subtle rounded-2 fw-bold p-2 fs-5 mb-4 text-center">
                                         Total: $ {total}
-
                                     </div>
 
                                     <div className="buttons-container text-center gap-3">
@@ -93,13 +92,13 @@ export default function Carrito() {
                                                 Pagar
                                             </button>
                                             <Link
-                                                to="/gatos"
+                                                to="/autos"
                                                 className="text-decoration-none"
                                             >
                                                 <button
                                                     className="btn btn-secondary mt-3 text-center fw-bold rounded fs-6 w-200"
                                                 >
-                                                    Ver más mascotas
+                                                    Ver más vehículos
                                                 </button>
                                             </Link>
                                         </div>
