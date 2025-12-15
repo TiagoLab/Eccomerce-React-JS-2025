@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useProducts } from '../context/GatosContext'
+import { useAutos } from '../context/AutosContext'
 import { toast } from "react-toastify"
 
-function FormularioGatos() {
+function FormularioAutos() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { agregarGatos, editarGatos, validar } = useProducts()
+  const { agregarAuto, editarAuto, validar } = useAutos()
 
-  const gatoRecibido = location.state?.gato
+  const autoRecibido = location.state?.auto
 
-  const modo = gatoRecibido ? "editar" : "agregar"
+  const modo = autoRecibido ? "editar" : "agregar"
 
-  const [gatos, setGatos] = useState({
+  const [auto, setAuto] = useState({
     id: '',
     imagen: '',
     nombre: '',
@@ -25,24 +25,24 @@ function FormularioGatos() {
   const [cargando, setCargando] = useState(false)
 
   useEffect(() => {
-    if (modo === "editar" && gatoRecibido) {
-      setGatos({
-        id: gatoRecibido.id || '',
-        imagen: gatoRecibido.imagen || '',
-        nombre: gatoRecibido.nombre || '',
-        descripcion: gatoRecibido.descripcion || '',
-        categoria: gatoRecibido.categoria || '',
-        precio: gatoRecibido.precio || ''
+    if (modo === "editar" && autoRecibido) {
+      setAuto({
+        id: autoRecibido.id || '',
+        imagen: autoRecibido.imagen || '',
+        nombre: autoRecibido.nombre || '',
+        descripcion: autoRecibido.descripcion || '',
+        categoria: autoRecibido.categoria || '',
+        precio: autoRecibido.precio || ''
       })
     }
-  }, [modo, gatoRecibido])
+  }, [modo, autoRecibido])
 
   const manejarCambio = (e) => {
     const { name, value } = e.target
 
     if (name === 'descripcion' && value.length > 200) return
 
-    setGatos(prev => ({ ...prev, [name]: value }))
+    setAuto(prev => ({ ...prev, [name]: value }))
 
     if (errores[name]) {
       setErrores(prev => ({ ...prev, [name]: '' }))
@@ -50,27 +50,28 @@ function FormularioGatos() {
   }
 
   const validarFormulario = () => {
-    const resultado = validar(gatos)
+    const resultado = validar(auto)
     setErrores(resultado.errores)
     return resultado.esValido
   }
 
   const manejarEnvio = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!validarFormulario()) return
 
     setCargando(true)
     try {
-      const gatoEnviar = {
-        ...gatos,
-        precio: gatos.precio.toString().replace(',', '.')
+      const autoEnviar = {
+        ...auto,
+        precio: auto.precio.toString().replace(',', '.')
       }
-      if (modo === "agregar") {
-        const nuevoGato = await agregarGatos(gatoEnviar)
-        toast.success(`Gato "${nuevoGato.nombre}" agregado correctamente con ID: ${nuevoGato.id}`)
 
-        setGatos({
+      if (modo === "agregar") {
+        const nuevoAuto = await agregarAuto(autoEnviar)
+        toast.success(`Vehículo "${nuevoAuto.nombre}" agregado correctamente (ID: ${nuevoAuto.id})`)
+
+        setAuto({
           id: '',
           imagen: '',
           nombre: '',
@@ -80,22 +81,22 @@ function FormularioGatos() {
         })
 
         setTimeout(() => {
-          navigate('/gatos')
+          navigate('/autos')
         }, 100)
 
       } else {
-        await editarGatos(gatoEnviar)
-        toast.success("Mascota actualizada correctamente!")
+        await editarAuto(autoEnviar)
+        toast.success("Vehículo actualizado correctamente!")
 
         setTimeout(() => {
-          navigate('/gatos')
+          navigate('/autos')
         }, 100)
       }
 
       setErrores({})
 
     } catch (error) {
-      toast.warn(`Hubo un problema al ${modo === "editar" ? 'actualizar' : 'agregar'} la mascota.`)
+      toast.warn(`Hubo un problema al ${modo === "editar" ? 'actualizar' : 'agregar'} el vehículo.`)
       console.error('Error:', error)
     } finally {
       setCargando(false)
@@ -105,93 +106,85 @@ function FormularioGatos() {
   const cancelarEdicion = () => {
     if (modo === "editar") {
       toast('Edición cancelada')
-      navigate('/gatos')
+      navigate('/autos')
     }
   }
 
   return (
     <form onSubmit={manejarEnvio} className="mx-auto p-4 border rounded-3 shadow-sm w-100 w-md-75 w-lg-50">
-      <h2 className="fw-bold mb-4 text-center text-primary">{modo === "editar" ? 'Editar' : 'Agregar'} Mascota (gato)</h2>
+      <h2 className="fw-bold mb-4 text-center text-primary">
+        {modo === "editar" ? 'Editar Vehículo' : 'Agregar Vehículo'}
+      </h2>
 
-      {modo === "editar" && gatoRecibido && (
+      {modo === "editar" && autoRecibido && (
         <p className="text-center text-secondary mb-4">
-          Editando: {gatoRecibido.nombre} (ID: {gatoRecibido.id})
+          Editando: {autoRecibido.nombre} (ID: {autoRecibido.id})
         </p>
       )}
 
       <div className="mb-3">
-        <label className="form-label fw-semibold">
-          Nombre: *
-        </label>
+        <label className="form-label fw-semibold">Nombre: *</label>
         <input
           type="text"
           name="nombre"
-          value={gatos.nombre}
+          value={auto.nombre}
           onChange={manejarCambio}
           disabled={cargando}
           className={`form-control ${errores.nombre ? "is-invalid" : ""}`}
-          placeholder="Ingrese el nombre de la mascota (gato)"
+          placeholder="Ingrese el nombre del vehículo"
         />
         {errores.nombre && <div className="invalid-feedback">{errores.nombre}</div>}
       </div>
 
       <div className="mb-3">
-        <label className="form-label fw-semibold">
-          Precio: *
-        </label>
+        <label className="form-label fw-semibold">Precio: *</label>
         <input
           type="text"
           name="precio"
-          value={gatos.precio}
+          value={auto.precio}
           onChange={manejarCambio}
           disabled={cargando}
-          placeholder="Ej: 40.000 o 40.000,50"
+          placeholder="Ej: 1.500.000 o 1.500.000,50"
           inputMode="decimal"
           className={`form-control ${errores.precio ? "is-invalid" : ""}`}
         />
         <div className="form-text text-muted">
-          Formato argentino: punto para miles, sin decimales.
+          Formato argentino: punto para miles, coma para decimales.
         </div>
         {errores.precio && <div className="invalid-feedback">{errores.precio}</div>}
       </div>
 
       <div className="mb-3">
-        <label className="form-label fw-semibold">
-          Categoría:
-        </label>
+        <label className="form-label fw-semibold">Categoría:</label>
         <input
           type="text"
           name="categoria"
-          value={gatos.categoria}
+          value={auto.categoria}
           onChange={manejarCambio}
           disabled={cargando}
-          placeholder="Ej: Pelo semilargo, Pelo corto oriental, etc."
+          placeholder="Ej: Sedán, SUV, Hatchback, etc."
           className="form-control"
         />
       </div>
 
       <div className="mb-3">
-        <label className="form-label fw-semibold">
-          Imagen (URL):
-        </label>
+        <label className="form-label fw-semibold">Imagen (URL):</label>
         <input
           type="text"
           name="imagen"
-          value={gatos.imagen}
+          value={auto.imagen}
           onChange={manejarCambio}
           disabled={cargando}
-          placeholder="https://i.imgur.com/JriKJW5.png"
+          placeholder="https://i.imgur.com/ejemplo.png"
           className="form-control"
         />
       </div>
 
       <div className="mb-3">
-        <label className="form-label fw-semibold">
-          Descripción: *
-        </label>
+        <label className="form-label fw-semibold">Descripción: *</label>
         <textarea
           name="descripcion"
-          value={gatos.descripcion}
+          value={auto.descripcion}
           onChange={manejarCambio}
           rows="4"
           disabled={cargando}
@@ -199,8 +192,8 @@ function FormularioGatos() {
           placeholder="Mínimo 10 caracteres, máximo 200 caracteres"
           className={`form-control ${errores.descripcion ? "is-invalid" : ""}`}
         />
-        <div className={`form-text ${gatos.descripcion.length > 200 ? "text-danger" : "text-muted"}`}>
-          {gatos.descripcion.length}/200 caracteres
+        <div className={`form-text ${auto.descripcion.length > 200 ? "text-danger" : "text-muted"}`}>
+          {auto.descripcion.length}/200 caracteres
         </div>
         {errores.descripcion && <div className="invalid-feedback">{errores.descripcion}</div>}
       </div>
@@ -213,7 +206,7 @@ function FormularioGatos() {
         >
           {cargando
             ? (modo === "editar" ? 'Actualizando...' : 'Agregando...')
-            : (modo === "editar" ? 'Confirmar Cambios' : 'Agregar Mascota')
+            : (modo === "editar" ? 'Confirmar Cambios' : 'Agregar Vehículo')
           }
         </button>
 
@@ -231,4 +224,6 @@ function FormularioGatos() {
       <p>(*) Campos obligatorios</p>
     </form>
   )
-} export default FormularioGatos
+}
+
+export default FormularioAutos
