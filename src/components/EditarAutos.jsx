@@ -1,37 +1,38 @@
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-function EditarGatos() {
+function EditarAutos() {
     const { state } = useLocation()
     const navigate = useNavigate()
-    const gatoOriginal = state.gato
+    const autoOriginal = state.auto
 
-    const [gatos, setGatos] = useState({
-        ...gatoOriginal,
-        categoria: gatoOriginal.categoria || 'Sin categoría'
+    const [auto, setAuto] = useState({
+        ...autoOriginal,
+        categoria: autoOriginal.categoria || 'Sin categoría'
     })
+
     const [cargando, setCargando] = useState(false)
     const [errores, setErrores] = useState({})
 
     const manejarCambio = (e) => {
-        const { name, value } = e.target;
-        setGatos(prev => ({ ...prev, [name]: value }))
+        const { name, value } = e.target
+        setAuto(prev => ({ ...prev, [name]: value }))
     }
 
     const validarFormulario = () => {
         const errorDeCarga = {}
 
-        if (!gatos.nombre.trim()) {
-            errorDeCarga.nombre = "El nombre es obligatorio."
+        if (!auto.nombre.trim()) {
+            errorDeCarga.nombre = "El nombre del vehículo es obligatorio."
         }
 
-        if (!gatos.precio.trim()) {
+        if (!auto.precio.trim()) {
             errorDeCarga.precio = "El precio es obligatorio."
         } else {
-            const precioLimpio = gatos.precio.replace(/\./g, "").replace(",", ".")
+            const precioLimpio = auto.precio.replace(/\./g, "").replace(",", ".")
             const precioNumerico = parseFloat(precioLimpio)
 
-            if (!/^[\d.,]+$/.test(gatos.precio.replace(/\./g, ""))) {
+            if (!/^[\d.,]+$/.test(auto.precio.replace(/\./g, ""))) {
                 errorDeCarga.precio = "Solo números, puntos o comas."
             } else if (isNaN(precioNumerico)) {
                 errorDeCarga.precio = "Precio no válido."
@@ -40,38 +41,45 @@ function EditarGatos() {
             }
         }
 
-        if (!gatos.descripcion.trim()) {
+        if (!auto.descripcion.trim()) {
             errorDeCarga.descripcion = "La descripción es obligatoria."
-        } else if (gatos.descripcion.length < 10) {
+        } else if (auto.descripcion.length < 10) {
             errorDeCarga.descripcion = "Mínimo 10 caracteres."
-        } else if (gatos.descripcion.length > 200) {
+        } else if (auto.descripcion.length > 200) {
             errorDeCarga.descripcion = "Máximo 200 caracteres."
         }
 
-        setErrores(errorDeCarga);
+        setErrores(errorDeCarga)
         return Object.keys(errorDeCarga).length === 0
     }
 
     const manejarEnvio = async (e) => {
         e.preventDefault()
         if (!validarFormulario()) return
+
         setCargando(true)
         try {
-            const productoEnviar = {
-                ...gatos,
-                precio: gatos.precio.replace(',', '.')
-            };
-            const respuesta = await fetch(`https://68d6f23ec2a1754b426c4d01.mockapi.io/gatos/${gatos.id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(productoEnviar),
-            })
+            const autoEnviar = {
+                ...auto,
+                precio: auto.precio.replace(',', '.')
+            }
+
+            const respuesta = await fetch(
+                `https://68d6f23ec2a1754b426c4d01.mockapi.io/autos/${auto.id}`,
+                {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(autoEnviar),
+                }
+            )
 
             if (!respuesta.ok) throw new Error('Error al actualizar')
-            alert('Mascota actualizada correctamente')
-            navigate('/gatos')
+
+            alert('Vehículo actualizado correctamente')
+            navigate('/autos')
+
         } catch (error) {
-            alert('Error al actualizar la mascota')
+            alert('Error al actualizar el vehículo')
             console.error(error)
         } finally {
             setCargando(false)
@@ -80,18 +88,20 @@ function EditarGatos() {
 
     const cancelarEdicion = () => {
         alert('Edición cancelada')
-        navigate('/gatos')
+        navigate('/autos')
     }
 
     return (
         <form onSubmit={manejarEnvio} className="mx-auto p-4 border rounded-3 shadow-sm w-100 w-md-75 w-lg-50">
-            <h2 className="fw-bold mb-4 text-center text-primary">Editar Mascota (gato)</h2>
+
+            <h2 className="fw-bold mb-4 text-center text-primary">Editar Vehículo</h2>
+
             <div className="mb-3">
                 <label className="form-label fw-semibold">Nombre:</label>
                 <input
                     type="text"
                     name="nombre"
-                    value={gatos.nombre}
+                    value={auto.nombre}
                     onChange={manejarCambio}
                     disabled={cargando}
                     className={`form-control ${errores.nombre ? "is-invalid" : ""}`}
@@ -104,9 +114,9 @@ function EditarGatos() {
                 <input
                     type="text"
                     name="precio"
-                    value={gatos.precio}
+                    value={auto.precio}
                     onChange={manejarCambio}
-                    placeholder="Ej: 40.000 o 40.000,50"
+                    placeholder="Ej: 1.500.000 o 1.500.000,50"
                     className={`form-control ${errores.precio ? "is-invalid" : ""}`}
                 />
                 <small style={{ color: '#666' }}>Formato: punto para miles, coma para decimales</small>
@@ -118,7 +128,7 @@ function EditarGatos() {
                 <input
                     type="text"
                     name="categoria"
-                    value={gatos.categoria}
+                    value={auto.categoria}
                     onChange={manejarCambio}
                     className="form-control"
                 />
@@ -129,7 +139,7 @@ function EditarGatos() {
                 <input
                     type="text"
                     name="imagen"
-                    value={gatos.imagen}
+                    value={auto.imagen}
                     onChange={manejarCambio}
                     disabled={cargando}
                     className="form-control"
@@ -140,7 +150,7 @@ function EditarGatos() {
                 <label className="form-label fw-semibold">Descripción:</label>
                 <textarea
                     name="descripcion"
-                    value={gatos.descripcion}
+                    value={auto.descripcion}
                     onChange={manejarCambio}
                     disabled={cargando}
                     rows="4"
@@ -148,11 +158,10 @@ function EditarGatos() {
                     placeholder="Mínimo 10 caracteres, máximo 200 caracteres"
                     className={`form-control ${errores.descripcion ? "is-invalid" : ""}`}
                 />
-                <div className={`form-text ${gatos.descripcion.length > 200 ? "text-danger" : "text-muted"}`}>
-                    {gatos.descripcion.length}/200 caracteres
+                <div className={`form-text ${auto.descripcion.length > 200 ? "text-danger" : "text-muted"}`}>
+                    {auto.descripcion.length}/200 caracteres
                 </div>
                 {errores.descripcion && <div className="invalid-feedback">{errores.descripcion}</div>}
-
             </div>
 
             <div className="d-flex gap-2">
@@ -163,6 +172,7 @@ function EditarGatos() {
                 >
                     {cargando ? 'Actualizando...' : 'Confirmar Cambios'}
                 </button>
+
                 <button
                     type="button"
                     onClick={cancelarEdicion}
@@ -174,5 +184,6 @@ function EditarGatos() {
 
         </form>
     )
+}
 
-} export default EditarGatos
+export default EditarAutos
