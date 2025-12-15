@@ -29,22 +29,29 @@ function Pagar() {
   }, [usuario])
 
   return (
-    <div>
-      <div className="text-center fs-6 mx-auto d-block">
-        <h2 className="text-center fs-6 mx-auto d-block">
-          <strong>Usuario:</strong> {usuario.nombre}
-        </h2>
+    <div className="container mt-4">
+
+      <h2 className="text-center fw-bold mb-4">Confirmación de compra</h2>
+
+      <div className="text-center fs-6 mx-auto d-block mb-4">
+        <p><strong>Usuario:</strong> {usuario.nombre}</p>
         <p><strong>Email:</strong> {usuario.email}</p>
+
         <button
           onClick={cerrarSesion}
-          className="btn btn-secondary text-center mb-5 rounded fs-6 mx-auto d-block"
+          className="btn btn-secondary text-center mb-4 rounded fs-6 mx-auto d-block"
         >
           Cerrar sesión
         </button>
-        <hr />
-      </div>    
 
-      <div>
+        <hr />
+      </div>
+
+      <div className="text-center mb-4">
+        <h4 className="fw-bold">Total a pagar: $ {total}</h4>
+      </div>
+
+      <div className="text-center">
         <button
           onClick={comprar}
           className="btn btn-success fw-bold rounded fs-6 mx-auto d-block"
