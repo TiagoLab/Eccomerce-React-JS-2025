@@ -5,7 +5,6 @@ import "../index.css"
 import { useAuthContext } from "../context/AuthContext"
 import { useCartContext } from "../context/CartContext"
 
-
 function Navbar() {
   const navigate = useNavigate()
   const location = useLocation()
@@ -13,8 +12,8 @@ function Navbar() {
   const { cart } = useCartContext()
 
   let selectValue = ""
-  if (location.pathname === "/gatos") selectValue = "gatos"
-  else if (location.pathname === "/perros") selectValue = "perros"
+  if (location.pathname === "/autos") selectValue = "autos"
+  else if (location.pathname === "/camionetas") selectValue = "camionetas"
   else selectValue = ""
 
   const totalProductos = cart.reduce((total, item) => total + item.quantity, 0)
@@ -22,11 +21,11 @@ function Navbar() {
   const handleSelectChange = (e) => {
     const value = e.target.value
     switch (value) {
-      case "gatos":
-        navigate("/gatos")
+      case "autos":
+        navigate("/autos")
         break
-      case "perros":
-        navigate("/perros")
+      case "camionetas":
+        navigate("/camionetas")
         break
       default:
         navigate("/")
@@ -46,8 +45,9 @@ function Navbar() {
           to="/"
           style={{ color: "#1565c0" }}
         >
-          e-commerce Transfor
+          Transfor Motors
         </Link>
+
         <button
           className="navbar-toggler text-primary rounded"
           type="button"
@@ -59,31 +59,49 @@ function Navbar() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+
         <div className="collapse navbar-collapse" id="navbarColor01">
           <ul className="navbar-nav ms-auto fs-6 align-items-center">
+
+            {/* Inicio */}
             <li className="nav-item">
-              <Link className={`nav-link nav-link-azul ${location.pathname === '/' ? 'active' : ''}`}
-                to="/">
+              <Link
+                className={`nav-link nav-link-azul ${location.pathname === '/' ? 'active' : ''}`}
+                to="/"
+              >
                 <FontAwesomeIcon icon={faHome} />
               </Link>
             </li>
+
+            {/* Selector de vehículos */}
             <li className="nav-item d-flex align-items-center ms-3">
-              <div className={`nav-link nav-link-azul ${location.pathname === '/gatos' || location.pathname === '/perros' ? 'active' : ''}`}>
+              <div
+                className={`nav-link nav-link-azul ${
+                  location.pathname === '/autos' || location.pathname === '/camionetas'
+                    ? 'active'
+                    : ''
+                }`}
+              >
                 <select
                   className="nav-link nav-link-azul fw-semibold border-0 fs-6 bg-transparent"
                   onChange={handleSelectChange}
                   value={selectValue}
                   style={{
                     color: "#1565c0",
-                    fontWeight: location.pathname === '/gatos' || location.pathname === '/perros' ? 'bold' : 'normal'
+                    fontWeight:
+                      location.pathname === '/autos' || location.pathname === '/camionetas'
+                        ? 'bold'
+                        : 'normal'
                   }}
                 >
-                  <option value="">Mascotas</option>
-                  <option value="gatos">Gatos</option>
-                  <option value="perros">Perros</option>
+                  <option value="">Vehículos</option>
+                  <option value="autos">Autos</option>
+                  <option value="camionetas">Camionetas</option>
                 </select>
               </div>
             </li>
+
+            {/* Servicios */}
             <li className="nav-item fs-6">
               <Link
                 className={`nav-link nav-link-azul ${location.pathname === '/servicios' ? 'active' : ''}`}
@@ -92,15 +110,27 @@ function Navbar() {
                 Servicios
               </Link>
             </li>
+
+            {/* Admin: agregar vehículo */}
             {usuario?.nombre === "admin" && (
               <li>
-                <Link className={`nav-link ms-2 nav-link-azul ${location.pathname === '/formulario-gatos' ? 'active' : ''}`}
-                to="/formulario-gatos">Agregar Mascota</Link>
+                <Link
+                  className={`nav-link ms-2 nav-link-azul ${
+                    location.pathname === '/formulario-autos' ? 'active' : ''
+                  }`}
+                  to="/formulario-autos"
+                >
+                  Agregar Vehículo
+                </Link>
               </li>
             )}
+
+            {/* Carrito + Usuario */}
             <li className="nav-item d-flex align-items-center">
               <Link
-                className={`nav-link position-relative nav-link-azul ${location.pathname === '/carrito' ? 'active' : ''}`}
+                className={`nav-link position-relative nav-link-azul ${
+                  location.pathname === '/carrito' ? 'active' : ''
+                }`}
                 to="/carrito"
               >
                 <FontAwesomeIcon icon={faShoppingCart} size="lg" />
@@ -113,17 +143,24 @@ function Navbar() {
                   </span>
                 )}
               </Link>
+
               {isAuthenticated ? (
                 <>
                   <span className="ms-2 nav-link-azul">
                     Hola {usuario.nombre}!
                   </span>
+
                   {usuario.nombre === "admin" && (
-                    <Link className={`nav-link position-relative ms-2 nav-link-azul ${location.pathname === '/dashboard' ? 'active' : ''}`}
-                      to="/dashboard">
+                    <Link
+                      className={`nav-link position-relative ms-2 nav-link-azul ${
+                        location.pathname === '/dashboard' ? 'active' : ''
+                      }`}
+                      to="/dashboard"
+                    >
                       Dashboard
                     </Link>
                   )}
+
                   <button
                     onClick={cerrarSesion}
                     className="btn btn-link nav-link-azul ms-2 p-0 fw-semibold"
@@ -133,11 +170,17 @@ function Navbar() {
                   </button>
                 </>
               ) : (
-                <Link className={`nav-link nav-link-azul ms-2 ${location.pathname === '/iniciar-sesion' ? 'active' : ''}`} to="/iniciar-sesion">
+                <Link
+                  className={`nav-link nav-link-azul ms-2 ${
+                    location.pathname === '/iniciar-sesion' ? 'active' : ''
+                  }`}
+                  to="/iniciar-sesion"
+                >
                   Iniciar Sesión
                 </Link>
               )}
             </li>
+
           </ul>
         </div>
       </div>
