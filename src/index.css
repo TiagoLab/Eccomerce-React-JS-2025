@@ -11,7 +11,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
 }
 
 a {
@@ -25,11 +24,11 @@ a:hover {
 }
 
 body {
-  background: linear-gradient(180deg, #a3cfff 0%, #ffffff 100%);  
+  background: linear-gradient(180deg, #a3cfff 0%, #ffffff 100%);
   box-sizing: border-box;
   justify-content: center;
   margin: 0;
-  padding-top: 90px; 
+  padding-top: 90px;
   display: flex;
   place-items: center;
   min-width: 320px;
@@ -52,9 +51,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border: 2px solid #b68a8f;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -80,7 +81,7 @@ button:focus-visible {
 }
 
 .nav-link-azul:hover {
-  color: #0d47a1 !important; 
+  color: #0d47a1 !important;
   transform: scale(1.05);
 }
 
@@ -92,8 +93,8 @@ button:focus-visible {
 .navbar-nav .nav-link.active {
   color: #1565c0 !important;
   font-weight: bold;
-  border-bottom: 2px solid #1565c0; 
-  background-color: rgba(21, 101, 192, 0.1); 
+  border-bottom: 2px solid #1565c0;
+  background-color: rgba(21, 101, 192, 0.1);
 }
 
 .nav-item select.active {
@@ -114,7 +115,7 @@ button:focus-visible {
   background-color: rgba(21, 101, 192, 0.05);
 }
 
-/* footer */
+/* Footer */
 .footer-link {
   color: #1565c0;
   text-decoration: none;
@@ -125,15 +126,14 @@ button:focus-visible {
   color: #0d47a1;
 }
 
-
-.mascota {
+/* Elementos del catálogo de autos */
+.vehiculo {
   transition: transform 0.6s ease, box-shadow 0.6s ease;
-
   will-change: transform;
   transform-origin: center;
 }
 
-.mascota:hover {
+.vehiculo:hover {
   transform: scale(1.05);
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
 }
