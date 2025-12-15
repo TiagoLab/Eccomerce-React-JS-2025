@@ -9,20 +9,21 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const token = localStorage.getItem("authToken")
         const emailGuardado = localStorage.getItem("authEmail")
+
         if (token) {
             const username = token.replace("fake-token-", "")
             setUsuario({
                 nombre: username,
-                email: emailGuardado || "",          
+                email: emailGuardado || "",
             })
-    }   
+        }
     }, [])
 
     const iniciarSesion = (username) => {
         const token = `fake-token-${username}`
         localStorage.setItem("authToken", token)
-        
-        const emailGuardado = localStorage.getItem("authEmail")      
+
+        const emailGuardado = localStorage.getItem("authEmail")
         setUsuario({
             nombre: username,
             email: emailGuardado || "",
@@ -39,7 +40,7 @@ export function AuthProvider({ children }) {
         usuario,
         iniciarSesion,
         cerrarSesion,
-        isAuthenticated: !!usuario, 
+        isAuthenticated: !!usuario,
         esAdmin: usuario?.nombre === "admin",
     }
 
